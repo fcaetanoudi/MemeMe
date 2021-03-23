@@ -18,13 +18,23 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eTD-bQ-Pxi">
                                 <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
-                                    <barButtonItem style="plain" id="wTN-kv-Ajh">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="cQl-Q1-lAK">
-                                            <rect key="frame" x="20" y="12" width="374" height="30"/>
+                                    <barButtonItem style="plain" id="jLm-hV-fuJ">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="K8M-Fg-5A4">
+                                            <rect key="frame" x="20" y="16" width="25" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="Pick"/>
+                                            <state key="normal" image="camera" catalog="system"/>
                                             <connections>
-                                                <action selector="imagePickerButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="44V-Z3-sH0"/>
+                                                <action selector="openFromCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LA5-Hk-rxz"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" id="wTN-kv-Ajh">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cQl-Q1-lAK">
+                                            <rect key="frame" x="370" y="16" width="24" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" image="photo" catalog="system"/>
+                                            <connections>
+                                                <action selector="openFromGallery:" destination="BYZ-38-t0r" eventType="touchUpInside" id="keg-fc-cbH"/>
                                             </connections>
                                         </button>
                                     </barButtonItem>
@@ -45,7 +55,7 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TC7-bm-LOi">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TC7-bm-LOi">
                                 <rect key="frame" x="10" y="148" width="394" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="vZZ-5i-yIN"/>
@@ -53,7 +63,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l70-RO-Cgh">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l70-RO-Cgh">
                                 <rect key="frame" x="10" y="703" width="394" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Sd4-Y7-9Gm"/>
@@ -84,9 +94,10 @@
                     </view>
                     <connections>
                         <outlet property="bottomTextField" destination="l70-RO-Cgh" id="3ix-4F-4aC"/>
+                        <outlet property="cameraButton" destination="K8M-Fg-5A4" id="0AW-SE-ujG"/>
+                        <outlet property="galleryButton" destination="cQl-Q1-lAK" id="Bex-yd-k9D"/>
                         <outlet property="imagePickedView" destination="yCD-ms-E4u" id="wF4-OW-8j9"/>
                         <outlet property="navBar" destination="kN0-uV-e96" id="DV4-iD-VKj"/>
-                        <outlet property="pickbutton" destination="cQl-Q1-lAK" id="Vde-Co-AnU"/>
                         <outlet property="shareButton" destination="Dal-jE-DIO" id="8eA-1q-wfy"/>
                         <outlet property="toolBar" destination="eTD-bQ-Pxi" id="fQS-uf-kJY"/>
                         <outlet property="topTextField" destination="TC7-bm-LOi" id="YMF-dr-6gc"/>
@@ -98,6 +109,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="camera" catalog="system" width="128" height="94"/>
+        <image name="photo" catalog="system" width="128" height="93"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
     </resources>
 </document>

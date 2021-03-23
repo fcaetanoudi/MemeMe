@@ -12,7 +12,8 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     var imagePicker = UIImagePickerController()
     var memedImage = UIImage()
     
-    @IBOutlet weak var pickbutton: UIButton!
+    @IBOutlet weak var cameraButton: UIButton!
+    @IBOutlet weak var galleryButton: UIButton!
     @IBOutlet weak var imagePickedView: UIImageView!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
@@ -38,15 +39,16 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         subcribeToKeyBoardNotifications()
+        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         shareButton.isEnabled = false
     }
-        
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeToKeyBoardNotifications()
     }
     
-   
+    
     
     func save(_ memedImage: UIImage) {
         if imagePickedView.image != nil && topTextField.text != nil && bottomTextField.text != nil
@@ -60,42 +62,30 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     }
     
     func toolBarVisible(_ visible: Bool){
-        if !visible {
-            navBar.isHidden = true
-            toolBar.isHidden = true
-        } else {
-            navBar.isHidden = false
-            toolBar.isHidden = false
-        }
+        navBar.isHidden = !visible
+        toolBar.isHidden = !visible
     }
     
     
     func generateMemedImage() -> UIImage {
         
-        toolBarVisible(false)
-
+        self.toolBarVisible(false)
+        
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
-        toolBarVisible(true)
-
-        return memedImage
+        self.toolBarVisible(true)
         
-    }
-    
-    @IBAction func imagePickerButton(_ sender: Any) {
-        showActionSheet(button: pickbutton)
-        let pickerController = UIImagePickerController()
-        present(pickerController, animated: true, completion: nil)
+        return memedImage
         
     }
     
     @IBAction func shareMemedImage(_ sender: Any) {
         let memeToShare = generateMemedImage()
         let activityController = UIActivityViewController(activityItems: [memeToShare], applicationActivities: nil)
-        activityController.completionWithItemsHandler = { activity, success, items, error in
+        activityController.completionWithItemsHandler = { _, success, _, _ in
             if success {
                 self.save(memeToShare)
             }
@@ -108,39 +98,27 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
 
 extension MemeEditorViewController: UIImagePickerControllerDelegate {
     
+    
+    @IBAction func openFromGallery(_ sender: Any) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    @IBAction func openFromCamera(_ sender: Any) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .camera
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             imagePickedView.image = image
-            imagePickedView.contentMode = .scaleAspectFill
         }
-        self.imagePicker.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         shareButton.isEnabled = true
-    }
-    
-    func photoFromCamera() {
-        imagePicker.sourceType = .camera
-        self.present(imagePicker, animated: true, completion: nil)
-    }
-    
-    func photoFromGallery() {
-        imagePicker.sourceType = .photoLibrary
-        self.present(imagePicker, animated: true, completion: nil)
-    }
-    
-    func showActionSheet(button: UIButton) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (alert:UIAlertAction!) in
-            self.photoFromCamera()
-        }))
-        
-        actionSheet.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { (alert:UIAlertAction!) in
-            self.photoFromGallery()
-        }))
-        
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        self.present(actionSheet, animated: true, completion: nil)
     }
     
 }
