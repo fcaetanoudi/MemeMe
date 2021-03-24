@@ -24,7 +24,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="camera" catalog="system"/>
                                             <connections>
-                                                <action selector="openFromCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LA5-Hk-rxz"/>
+                                                <action selector="pickImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="p1h-z8-azU"/>
                                             </connections>
                                         </button>
                                     </barButtonItem>
@@ -34,7 +34,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="photo" catalog="system"/>
                                             <connections>
-                                                <action selector="openFromGallery:" destination="BYZ-38-t0r" eventType="touchUpInside" id="keg-fc-cbH"/>
+                                                <action selector="pickImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Ea-IG-KFm"/>
                                             </connections>
                                         </button>
                                     </barButtonItem>

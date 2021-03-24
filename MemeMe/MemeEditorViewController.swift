@@ -99,26 +99,31 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
 extension MemeEditorViewController: UIImagePickerControllerDelegate {
     
     
-    @IBAction func openFromGallery(_ sender: Any) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
+    @IBAction func pickImage(_ sender: UIButton) {
+        
+        if (sender == cameraButton) {
+            presentPickerController(sourceType: .camera)
+        }
+        else {
+            presentPickerController(sourceType: .photoLibrary)
+        }
     }
     
-    @IBAction func openFromCamera(_ sender: Any) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .camera
-        present(imagePicker, animated: true, completion: nil)
+    func presentPickerController(sourceType: UIImagePickerController.SourceType) {
+        let picker = UIImagePickerController()
+        picker.sourceType = sourceType
+        picker.delegate = self
+        
+        present(picker, animated: true, completion: nil)
+        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             imagePickedView.image = image
+            shareButton.isEnabled = true
         }
         self.dismiss(animated: true, completion: nil)
-        shareButton.isEnabled = true
     }
     
 }
